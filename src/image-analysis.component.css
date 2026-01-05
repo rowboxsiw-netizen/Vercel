@@ -1,0 +1,19 @@
+
+.blinking-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  background-color: #22d3ee; /* cyan-400 */
+  animation: blink 1s step-end infinite;
+  margin-left: 4px;
+  vertical-align: text-bottom;
+}
+
+@keyframes blink {
+  from, to {
+    background-color: transparent;
+  }
+  50% {
+    background-color: #22d3ee;
+  }
+}
