@@ -1,0 +1,5 @@
+{
+  "name": "Priority Hints Demo",
+  "description": "A Vercel-inspired demonstration of how Priority Hints (fetchpriority) can be used to optimize image loading and improve Largest Contentful Paint (LCP).",
+  "requestFramePermissions": []
+}

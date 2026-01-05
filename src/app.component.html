@@ -1,0 +1,65 @@
+
+<main class="bg-black min-h-screen text-gray-300 antialiased p-4 sm:p-8">
+  <div class="max-w-7xl mx-auto">
+    
+    <header class="text-center py-16">
+      <div class="inline-block p-4 bg-white/10 rounded-full mb-6 border border-white/20">
+         <svg width="28" height="24" viewBox="0 0 76 65" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+          <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" fill="currentColor"/>
+        </svg>
+      </div>
+      <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
+        Optimizing LCP with Priority Hints
+      </h1>
+      <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-400">
+        An interactive demonstration of the <code class="text-sm font-mono bg-white/10 text-cyan-300 rounded-md py-1 px-2">'fetchpriority'</code> attribute in action.
+      </p>
+    </header>
+
+    <section class="max-w-4xl mx-auto mb-16 p-8 bg-gray-900/50 border border-gray-800 rounded-xl backdrop-blur-sm">
+      <h2 class="text-2xl font-bold text-white mb-4">What Are Priority Hints?</h2>
+      <div class="prose prose-invert prose-lg text-gray-400 max-w-none">
+        <p>
+          Priority Hints are a web performance feature that allows developers to signal the relative importance of a resource to the browser. By using the <code class="text-sm font-mono bg-white/10 text-cyan-300 rounded-md py-0.5 px-1.5">'fetchpriority'</code> attribute on tags like <code class="text-sm font-mono bg-white/10 text-cyan-300 rounded-md py-0.5 px-1.5">&lt;img&gt;</code>, <code class="text-sm font-mono bg-white/10 text-cyan-300 rounded-md py-0.5 px-1.5">&lt;link&gt;</code>, and <code class="text-sm font-mono bg-white/10 text-cyan-300 rounded-md py-0.5 px-1.5">&lt;script&gt;</code>, you can influence the order in which resources are downloaded. This is particularly useful for improving the <strong class="text-gray-300">Largest Contentful Paint (LCP)</strong>, a core web vital that measures perceived load speed.
+        </p>
+      </div>
+    </section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      @for (image of images(); track image.id) {
+        <div class="bg-gray-900/80 border border-gray-800 rounded-xl overflow-hidden flex flex-col transform transition-all duration-300 hover:border-cyan-400/50 hover:shadow-2xl hover:shadow-cyan-500/10 hover:-translate-y-1">
+          
+          <div class="aspect-[3/2] overflow-hidden">
+            @if (image.isLCP) {
+              <img [ngSrc]="image.src" [alt]="image.alt" width="1200" height="800" priority class="w-full h-full object-cover" />
+            } @else {
+              <img [src]="image.src" [alt]="image.alt" [attr.fetchpriority]="image.fetchpriority" loading="lazy" width="800" height="600" class="w-full h-full object-cover" />
+            }
+          </div>
+
+          <div class="p-6 flex-grow flex flex-col">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-bold text-white">{{ image.title }}</h3>
+              <span class="text-xs font-medium px-2.5 py-1 rounded-full" [class]="{
+                'bg-cyan-900 text-cyan-300': image.fetchpriority === 'high',
+                'bg-gray-700 text-gray-300': image.fetchpriority === 'auto',
+                'bg-yellow-900 text-yellow-300': image.fetchpriority === 'low'
+              }">
+                {{ image.fetchpriority }}
+              </span>
+            </div>
+            <p class="text-gray-400 mt-3 text-base flex-grow">{{ image.description }}</p>
+            <div class="mt-6 bg-gray-950/70 p-4 rounded-lg border border-gray-800">
+              <label class="text-xs text-gray-500 mb-2 block">Implementation</label>
+              <pre class="text-sm text-left"><code class="font-mono text-cyan-300">{{ image.codeSnippet }}</code></pre>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <footer class="text-center mt-20 pb-8 text-gray-600">
+      <p>Built with Angular & Tailwind CSS for the Applet Environment.</p>
+    </footer>
+  </div>
+</main>
